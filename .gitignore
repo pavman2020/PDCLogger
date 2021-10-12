@@ -1,0 +1,9 @@
+*.cache
+*.suo
+Logger\bin\*
+Logger\obj\*
+.vs\*
+*.pdb
+*.dll
+.vs/VSWorkspaceState.json
+.vs/slnx.sqlite

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace MyLogger
+namespace PDCLogger
 {
     public class FileLogger : GenericLogger
     {

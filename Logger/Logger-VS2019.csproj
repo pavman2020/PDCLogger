@@ -7,8 +7,8 @@
     <ProjectGuid>{13F2A0A2-55EF-423E-B6EF-5AEED3CAFBE1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Logger</RootNamespace>
-    <AssemblyName>Logger</AssemblyName>
+    <RootNamespace>PDCLogger</RootNamespace>
+    <AssemblyName>PDCLogger</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

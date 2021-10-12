@@ -2,7 +2,7 @@
 using SRCS = System.Runtime.CompilerServices;
 using STT = System.Threading.Thread;
 
-namespace MyLogger
+namespace PDCLogger
 {
     public abstract class GenericLogger : ILogger, IDisposable
     {

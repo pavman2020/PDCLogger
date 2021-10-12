@@ -1,4 +1,4 @@
-﻿namespace MyLogger
+﻿namespace PDCLogger
 {
     public class Flags<T>
     {

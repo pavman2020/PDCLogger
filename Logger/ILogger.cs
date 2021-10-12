@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using SRCS = System.Runtime.CompilerServices;
 
-namespace MyLogger
+namespace PDCLogger
 {
     public interface ILogger
     {

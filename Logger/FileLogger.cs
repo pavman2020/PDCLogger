@@ -170,7 +170,7 @@ namespace PDCLogger
                                 break;
                         }
 
-                        appendLineToFile(sPfx, e.String, bWhence ? Whence(e.Caller, e.File, e.LineNumber) : string.Empty);
+                        appendLineToFile(sPfx, e.String, bWhence ? Utility.Whence(e.Caller, e.File, e.LineNumber) : string.Empty);
                         fExtra?.Invoke();
                         m_iCurrentNumLines++;
                     }

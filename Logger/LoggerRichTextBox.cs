@@ -119,17 +119,17 @@ namespace PDCLogger
                         switch (e.Type)
                         {
                             case LogEventArgs.LogEventType.Debug:
-                                if (!Mute.Debug) AppendLine(string.Format("{0} {1} {2}", prefix("D"), e.String, ShowWhence.Debug ? GenericLogger.Whence(e.Caller, e.File, e.LineNumber) : string.Empty), LevelColoration.Debug.Foreground, LevelColoration.Debug.Background);
+                                if (!Mute.Debug) AppendLine(string.Format("{0} {1} {2}", prefix("D"), e.String, ShowWhence.Debug ? Utility.Whence(e.Caller, e.File, e.LineNumber) : string.Empty), LevelColoration.Debug.Foreground, LevelColoration.Debug.Background);
                                 break;
 
                             case LogEventArgs.LogEventType.Error:
-                                if (!Mute.Error) AppendLine(string.Format("{0} {1} {2}", prefix("E"), e.String, ShowWhence.Error ? GenericLogger.Whence(e.Caller, e.File, e.LineNumber) : string.Empty), LevelColoration.Error.Foreground, LevelColoration.Error.Background);
+                                if (!Mute.Error) AppendLine(string.Format("{0} {1} {2}", prefix("E"), e.String, ShowWhence.Error ? Utility.Whence(e.Caller, e.File, e.LineNumber) : string.Empty), LevelColoration.Error.Foreground, LevelColoration.Error.Background);
                                 break;
 
                             case LogEventArgs.LogEventType.Exception:
                                 if (!Mute.Exception)
                                 {
-                                    AppendLine(string.Format("{0} {1} {2}", prefix("X"), e.String, ShowWhence.Exception ? GenericLogger.Whence(e.Caller, e.File, e.LineNumber) : string.Empty), LevelColoration.Exception.Foreground, LevelColoration.Exception.Background);
+                                    AppendLine(string.Format("{0} {1} {2}", prefix("X"), e.String, ShowWhence.Exception ? Utility.Whence(e.Caller, e.File, e.LineNumber) : string.Empty), LevelColoration.Exception.Foreground, LevelColoration.Exception.Background);
 
                                     string strIndent = "     ";
                                     for (Exception ex = e.Exception; null != ex; ex = ex.InnerException)
@@ -143,11 +143,11 @@ namespace PDCLogger
                                 break;
 
                             case LogEventArgs.LogEventType.Warning:
-                                if (!Mute.Warning) AppendLine(string.Format("{0} {1} {2}", prefix("W"), e.String, ShowWhence.Warning ? GenericLogger.Whence(e.Caller, e.File, e.LineNumber) : string.Empty), LevelColoration.Warning.Foreground, LevelColoration.Warning.Background);
+                                if (!Mute.Warning) AppendLine(string.Format("{0} {1} {2}", prefix("W"), e.String, ShowWhence.Warning ? Utility.Whence(e.Caller, e.File, e.LineNumber) : string.Empty), LevelColoration.Warning.Foreground, LevelColoration.Warning.Background);
                                 break;
 
                             default:
-                                if (!Mute.Info) AppendLine(string.Format("{0} {1} {2}", prefix("I"), e.String, ShowWhence.Info ? GenericLogger.Whence(e.Caller, e.File, e.LineNumber) : string.Empty), LevelColoration.Info.Foreground, LevelColoration.Info.Background);
+                                if (!Mute.Info) AppendLine(string.Format("{0} {1} {2}", prefix("I"), e.String, ShowWhence.Info ? Utility.Whence(e.Caller, e.File, e.LineNumber) : string.Empty), LevelColoration.Info.Foreground, LevelColoration.Info.Background);
                                 break;
                         }
 

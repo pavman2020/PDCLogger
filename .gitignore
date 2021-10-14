@@ -1,9 +1,12 @@
 *.cache
 *.suo
-Logger\bin\*
-Logger\obj\*
-.vs\*
+Logger/bin/*
+Logger/obj/*
+.vs/*
 *.pdb
 *.dll
 .vs/VSWorkspaceState.json
 .vs/slnx.sqlite
+.vs/slnx.sqlite
+*.cache
+Logger/obj/Debug/Logger-VS2019.csproj.AssemblyReference.cache

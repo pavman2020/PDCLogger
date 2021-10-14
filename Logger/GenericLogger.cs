@@ -21,11 +21,6 @@ namespace PDCLogger
 
         public Flags<bool> ShowWhence { get; set; } = new Flags<bool>() { Debug = true, Exception = true, Error = true };
 
-        public static string Whence([SRCS.CallerMemberName] string strCaller = null, [SRCS.CallerFilePath] string strFile = null, [SRCS.CallerLineNumber] int iLineNo = 0)
-        {
-            return string.Format("{0} at {1}:{2}", strCaller, strFile, iLineNo);
-        }
-
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
@@ -75,8 +70,5 @@ namespace PDCLogger
             if (!m_bDisposedValue)
                 m_bDisposedValue = true;
         }
-
-
-
     }
 }

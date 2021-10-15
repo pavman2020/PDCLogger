@@ -35,12 +35,12 @@ namespace PDCLogger
         {
             m_bPaused = false;
         }
+        
         public bool ShowLevel { get; set; } = true;
 
         public bool ShowThread { get; set; } = true;
 
         public bool ShowTimeStamp { get; set; } = true;
-
 
         private void HandleLoggerOnLog(object sender, LogEventArgs e)
         {

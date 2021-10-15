@@ -18,25 +18,54 @@ namespace PDCLogger
         private string m_strFilename = string.Empty;
 
         #region "Constructor"
-        public FileLogger(bool bAttachConsole = true)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bAttachConsole">if true (the default), the System.Console will be cc'd with every message </param>
+        protected FileLogger(bool bAttachConsole = true)
         {
             this.OnLog += HandleLoggerOnLog;
             if (bAttachConsole)
                 this.OnLog += Console.OnLog;
         }
 
+        /// <summary>
+        /// Create a logger attached to file. this file will be in use during the entire run, unless the Filename attribute is changed.
+        /// </summary>
+        /// <param name="strFilename">the fully pathed filename</param>
+        /// <param name="bAttachConsole">if true (the default), the System.Console will be cc'd with every message </param>
         public FileLogger(string strFilename, bool bAttachConsole = true) : this(bAttachConsole)
         {
             Filename = strFilename;
         }
 
-        public FileLogger(Interval interval, EventHandler ehNewFileIntervalReached, bool bAttachConsole = true) : this(string.Empty, bAttachConsole)
+        /// <summary>
+        /// Create a logger attached to file. this file will be in use until the file reaches 'iMaxLines' in length, and then the object will raise an event, which will be handled by the EventHandler 'ehNewFileIntervalReached'. This event handling must create and set this object's new filename
+        /// </summary>
+        /// <param name="strFilename">the fully pathed filename</param>
+        /// <param name="iMaxLines"></param>
+        /// <param name="ehNewFileIntervalReached">EventHandler to indicate a new file is needed</param>
+        /// <param name="bAttachConsole">if true (the default), the System.Console will be cc'd with every message </param>
+        public FileLogger(string strFilename, int iMaxLines, EventHandler ehNewFileIntervalReached, bool bAttachConsole = true) : this(strFilename, bAttachConsole)
+        {
+            MaxLines = iMaxLines;
+            OnNewFileIntervalReached += ehNewFileIntervalReached;
+        }
+
+        /// <summary>
+        /// Create a logger attached to file. this file will be in use until a specified time interval is reached, and then the object will raise an event, which will be handled by the EventHandler 'ehNewFileIntervalReached'. This event handling must create and set this object's new filename
+        /// </summary>
+        /// <param name="interval"></param>
+        /// <param name="ehNewFileIntervalReached">EventHandler to indicate a new file is needed</param>
+        /// <param name="bAttachConsole">if true (the default), the System.Console will be cc'd with every message </param>
+        public FileLogger(Interval interval, EventHandler ehNewFileIntervalReached, bool bAttachConsole = true) : this(bAttachConsole)
         {
             NewFileAfter = interval;
             OnNewFileIntervalReached += ehNewFileIntervalReached;
         }
 
-        #endregion
+        #endregion "Constructor"
 
         public event EventHandler OnNewFileIntervalReached;
 
@@ -84,7 +113,7 @@ namespace PDCLogger
             }
         }
 
-        public int MaxLines { get; set; } = 0;
+        public int? MaxLines { get; private set; } = null;
 
         public Interval NewFileAfter { get; private set; } = Interval.Never;
 
@@ -156,7 +185,7 @@ namespace PDCLogger
                         switch (NewFileAfter)
                         {
                             case Interval.AfterNLines:
-                                if ((MaxLines > 0) && (m_iCurrentNumLines >= MaxLines))
+                                if (((MaxLines ?? 0) > 0) && (m_iCurrentNumLines >= (MaxLines ?? 0)))
                                     OnNewFileIntervalReached?.Invoke(this, new EventArgs());
                                 break;
 

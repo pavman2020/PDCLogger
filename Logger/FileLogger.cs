@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace MyLogger
+namespace PDCLogger
 {
     public class FileLogger : GenericLogger
     {
@@ -17,23 +17,22 @@ namespace MyLogger
 
         private string m_strFilename = string.Empty;
 
-        public FileLogger()
+        public FileLogger(bool bAttachConsole = true)
         {
             this.OnLog += HandleLoggerOnLog;
+            if (bAttachConsole)
+                this.OnLog += Console.OnLog;
         }
 
-        public FileLogger(string strFilename) : this()
+        public FileLogger(string strFilename, bool bAttachConsole = true) : this(bAttachConsole)
         {
             Filename = strFilename;
         }
 
-        public FileLogger(Interval interval) : this(string.Empty, interval)
-        {
-        }
-
-        public FileLogger(string strFilename, Interval interval) : this(strFilename)
+        public FileLogger(Interval interval, EventHandler ehNewFileIntervalReached, bool bAttachConsole = true) : this(string.Empty, bAttachConsole)
         {
             NewFileAfter = interval;
+            OnNewFileIntervalReached += ehNewFileIntervalReached;
         }
 
         public event EventHandler OnNewFileIntervalReached;

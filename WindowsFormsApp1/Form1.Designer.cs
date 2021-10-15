@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            MyLogger.Flags<MyLogger.RTBColors> flags_11 = new MyLogger.Flags<MyLogger.RTBColors>();
-            MyLogger.RTBColors rtbColors1 = new MyLogger.RTBColors();
-            MyLogger.RTBColors rtbColors2 = new MyLogger.RTBColors();
-            MyLogger.RTBColors rtbColors3 = new MyLogger.RTBColors();
-            MyLogger.RTBColors rtbColors4 = new MyLogger.RTBColors();
-            MyLogger.RTBColors rtbColors5 = new MyLogger.RTBColors();
-            MyLogger.Flags<bool> flags_12 = new MyLogger.Flags<bool>();
-            this.loggerRichTextBox1 = new MyLogger.LoggerRichTextBox();
+            PDCLogger.Flags<PDCLogger.RTBColors> flags_11 = new PDCLogger.Flags<PDCLogger.RTBColors>();
+            PDCLogger.RTBColors rtbColors1 = new PDCLogger.RTBColors();
+            PDCLogger.RTBColors rtbColors2 = new PDCLogger.RTBColors();
+            PDCLogger.RTBColors rtbColors3 = new PDCLogger.RTBColors();
+            PDCLogger.RTBColors rtbColors4 = new PDCLogger.RTBColors();
+            PDCLogger.RTBColors rtbColors5 = new PDCLogger.RTBColors();
+            PDCLogger.Flags<bool> flags_12 = new PDCLogger.Flags<bool>();
+            this.loggerRichTextBox1 = new PDCLogger.LoggerRichTextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
@@ -85,7 +85,7 @@
         #endregion
 
 
-        private MyLogger.LoggerRichTextBox loggerRichTextBox1;
+        private PDCLogger.LoggerRichTextBox loggerRichTextBox1;
         private System.Windows.Forms.Timer timer1;
     }
 }

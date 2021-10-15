@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.ComponentModel;
 
-namespace MyLogger
+namespace PDCLogger
 {
     [TypeConverter(typeof(ExpandableObjectConverter))]
     public class RTBColors

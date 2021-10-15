@@ -10,7 +10,7 @@ using System.Drawing.Design;
 using System.Threading;
 using System.Windows.Forms.Design;
 
-namespace MyLogger
+namespace PDCLogger
 {
     public class LoggerRichTextBox : RichTextBox
     {

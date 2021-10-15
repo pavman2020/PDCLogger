@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.Design;
 
-namespace MyLogger
+namespace PDCLogger
 {
     public class LogEventArgs : EventArgs
     {

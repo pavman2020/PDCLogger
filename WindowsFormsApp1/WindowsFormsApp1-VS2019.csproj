@@ -80,9 +80,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Logger\Logger.csproj">
-      <Project>{13F2A0A2-55EF-423E-B6EF-5AEED3CAFBE1}</Project>
-      <Name>Logger</Name>
+    <ProjectReference Include="..\Logger\Logger-VS2019.csproj">
+      <Project>{13f2a0a2-55ef-423e-b6ef-5aeed3cafbe1}</Project>
+      <Name>Logger-VS2019</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 *.cache
 *.suo
 Logger/bin/*
@@ -10,3 +11,15 @@ Logger/obj/*
 .vs/slnx.sqlite
 *.cache
 Logger/obj/Debug/Logger-VS2019.csproj.AssemblyReference.cache
+=======
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/WindowsFormsApp1/obj
+/WindowsFormsApp1/bin/Debug
+*.suo
+/.vs
+/Logger/bin/Debug
+/Logger/obj
+>>>>>>> f833f569271fbd5e2085d368d8bb15ec66936849

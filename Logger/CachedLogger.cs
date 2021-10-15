@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyLogger
+namespace PDCLogger
 {
     public class CachedLogger : GenericLogger
     {
@@ -76,7 +76,7 @@ namespace MyLogger
                 {
                     if (!bMute)
                     {
-                        appendLineToList(sPfx, e.String, bWhence ? Whence(e.Caller, e.File, e.LineNumber) : string.Empty);
+                        appendLineToList(sPfx, e.String, bWhence ? Utility.Whence(e.Caller, e.File, e.LineNumber) : string.Empty);
                         fExtra?.Invoke();
                     }
                 });

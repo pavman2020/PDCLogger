@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PDCLogger
 {
@@ -30,18 +26,22 @@ namespace PDCLogger
                         System.Console.ForegroundColor = Colors.Debug.Foreground;
                         System.Console.BackgroundColor = Colors.Debug.Background;
                         break;
+
                     case LogEventArgs.LogEventType.Error:
                         System.Console.ForegroundColor = Colors.Error.Foreground;
                         System.Console.BackgroundColor = Colors.Error.Background;
                         break;
+
                     case LogEventArgs.LogEventType.Exception:
                         System.Console.ForegroundColor = Colors.Exception.Foreground;
                         System.Console.BackgroundColor = Colors.Exception.Background;
                         break;
+
                     case LogEventArgs.LogEventType.Info:
                         System.Console.ForegroundColor = Colors.Info.Foreground;
                         System.Console.BackgroundColor = Colors.Info.Background;
                         break;
+
                     case LogEventArgs.LogEventType.Warning:
                         System.Console.ForegroundColor = Colors.Warning.Foreground;
                         System.Console.BackgroundColor = Colors.Warning.Background;

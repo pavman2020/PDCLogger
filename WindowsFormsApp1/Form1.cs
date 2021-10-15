@@ -17,17 +17,15 @@ namespace WindowsFormsApp1
             InitializeComponent();
         }
 
-        private MyLogger.FileLogger Logger;
+        private PDCLogger.FileLogger Logger;
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
 
-            string strFilename = Filename;
-            Logger = new MyLogger.FileLogger(strFilename, MyLogger.FileLogger.Interval.Hourly);
+            Logger = new PDCLogger.FileLogger(PDCLogger.FileLogger.Interval.Hourly, Logger_OnNewFileIntervalReached, false);
 
             Logger.OnLog += loggerRichTextBox1.HandleLogEvent;
-            Logger.OnNewFileIntervalReached += Logger_OnNewFileIntervalReached;
 
             // loggerRichTextBox1.OnlyThreadIds.Add(System.Threading.Thread.CurrentThread.ManagedThreadId);
 
@@ -57,7 +55,7 @@ namespace WindowsFormsApp1
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
-        private MyLogger.LogEventArgs.LogEventType eventType = MyLogger.LogEventArgs.LogEventType.Debug;
+        private PDCLogger.LogEventArgs.LogEventType eventType = PDCLogger.LogEventArgs.LogEventType.Debug;
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -66,38 +64,45 @@ namespace WindowsFormsApp1
             {
                 switch (eventType)
                 {
-                    case MyLogger.LogEventArgs.LogEventType.Debug:
+                    case PDCLogger.LogEventArgs.LogEventType.Debug:
                         Logger.LogDebug(RandomString(80));
-                        eventType = MyLogger.LogEventArgs.LogEventType.Error;
+                        eventType = PDCLogger.LogEventArgs.LogEventType.Error;
                         break;
 
-                    case MyLogger.LogEventArgs.LogEventType.Error:
+                    case PDCLogger.LogEventArgs.LogEventType.Error:
                         Logger.LogError(RandomString(80));
-                        eventType = MyLogger.LogEventArgs.LogEventType.Exception;
+                        eventType = PDCLogger.LogEventArgs.LogEventType.Exception;
                         break;
 
-                    case MyLogger.LogEventArgs.LogEventType.Exception:
-                        Logger.LogException(RandomString(80), new Exception("OUTER", new Exception("Inner1", new Exception("Inner2"))));
-                        eventType = MyLogger.LogEventArgs.LogEventType.Info;
+                    case PDCLogger.LogEventArgs.LogEventType.Exception:
+                        try
+                        {
+                            int i = 0; int j = 5 / i;
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.LogException(RandomString(80), new Exception("OUTER", new Exception("Inner1", new Exception("Inner2", ex))));
+                        }
+                        eventType = PDCLogger.LogEventArgs.LogEventType.Info;
                         break;
 
-                    case MyLogger.LogEventArgs.LogEventType.Info:
+                    case PDCLogger.LogEventArgs.LogEventType.Info:
                         Logger.LogInfo(RandomString(80));
-                        eventType = MyLogger.LogEventArgs.LogEventType.Warning;
+                        eventType = PDCLogger.LogEventArgs.LogEventType.Warning;
                         break;
 
-                    case MyLogger.LogEventArgs.LogEventType.Warning:
+                    case PDCLogger.LogEventArgs.LogEventType.Warning:
                         Logger.LogWarning(RandomString(80));
-                        eventType = MyLogger.LogEventArgs.LogEventType.Debug;
+                        eventType = PDCLogger.LogEventArgs.LogEventType.Debug;
                         break;
                 }
 
                 Thread t = new Thread(new ThreadStart(new Action(() =>
                 {
-                    MyLogger.CachedLogger cl = null;
+                    PDCLogger.CachedLogger cl = null;
                     if (1 == spawn)
                     {
-                        cl = new MyLogger.CachedLogger(Logger, System.Threading.Thread.CurrentThread.ManagedThreadId);
+                        cl = new PDCLogger.CachedLogger(Logger, System.Threading.Thread.CurrentThread.ManagedThreadId);
                     }
 
                     for (int i = 0; i < 4;)

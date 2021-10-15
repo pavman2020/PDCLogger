@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using SRCS = System.Runtime.CompilerServices;
 
 namespace PDCLogger
@@ -18,8 +16,7 @@ namespace PDCLogger
         void LogInfo(string str, [SRCS.CallerMemberName] string strCaller = null, [SRCS.CallerFilePath] string strFile = null, [SRCS.CallerLineNumber] int iLineNo = 0);
 
         void LogWarning(string str, [SRCS.CallerMemberName] string strCaller = null, [SRCS.CallerFilePath] string strFile = null, [SRCS.CallerLineNumber] int iLineNo = 0);
-    
+
         string LastLine { get; }
     }
-
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using SRCS = System.Runtime.CompilerServices;
-using STT = System.Threading.Thread;
 
 namespace PDCLogger
 {

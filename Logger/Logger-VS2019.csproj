@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CachedLogger.cs" />
     <Compile Include="Console.cs" />
     <Compile Include="FileLogger.cs" />
     <Compile Include="Flags.cs" />

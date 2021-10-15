@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using SRCS = System.Runtime.CompilerServices;
 
 namespace PDCLogger
@@ -36,11 +32,6 @@ namespace PDCLogger
 
             return sb.ToString();
         }
-
-
-
-
-
 
         public static string Whence([SRCS.CallerMemberName] string strCaller = null, [SRCS.CallerFilePath] string strFile = null, [SRCS.CallerLineNumber] int iLineNo = 0)
         {

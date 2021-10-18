@@ -39,39 +39,66 @@ namespace PDCLogger
             Warning = new RTBColors() { Background = Color.Yellow, Foreground = Color.Black },
         };
 
+        /// <summary>
+        /// Mute flags - when set to true, the corresponding message type is muted from display
+        /// </summary>
         [Category("Appearance")]
         [Browsable(true), EditorBrowsable(EditorBrowsableState.Always)]
         [TypeConverter(typeof(ExpandableObjectConverter))]
         public Flags<bool> Mute { get; set; } = new Flags<bool>();
 
+        /// <summary>
+        /// OnlyThreadIds - if this list contains any ids, only those thread ids are displayed in the rich text box - if the list is empty, messages from all threads are displated
+        /// </summary>
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public List<int> OnlyThreadIds { get; private set; } = new List<int>();
 
+        /// <summary>
+        ///  if set to true - the user control will scroll to the newly added line
+        /// </summary>
         [DefaultValue(true)]
         [Category("Behavior")]
         [Browsable(true), EditorBrowsable(EditorBrowsableState.Always)]
         public bool ScrollToCaretOnAdd { get; set; } = true;
 
+        /// <summary>
+        /// when set to true, the message level will be displayed in the rich text box
+        /// </summary>
         [DefaultValue(true)]
         [Category("Appearance")]
         [Browsable(true), EditorBrowsable(EditorBrowsableState.Always)]
         public bool ShowLevel { get; set; } = true;
 
+        /// <summary>
+        /// when set to true, the thread id will be displayed in the rich text box
+        /// </summary>
         [DefaultValue(true)]
         [Category("Appearance")]
         [Browsable(true), EditorBrowsable(EditorBrowsableState.Always)]
         public bool ShowThread { get; set; } = true;
 
+        /// <summary>
+        /// when set to true, a timestamp will be displayed
+        /// </summary>
         [DefaultValue(true)]
         [Category("Appearance")]
         [Browsable(true), EditorBrowsable(EditorBrowsableState.Always)]
         public bool ShowTimestamp { get; set; } = true;
 
+        /// <summary>
+        ///  when set to true, will display from where in the source code was the message logged
+        /// </summary>
         [Category("Appearance")]
         [Browsable(true), EditorBrowsable(EditorBrowsableState.Always)]
         [TypeConverter(typeof(ExpandableObjectConverter))]
         public Flags<bool> ShowWhence { get; set; } = new Flags<bool>() { Debug = true, Error = true, Exception = true };
 
+        /// <summary>
+        /// append a line to the rich text box with the specified colors
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="foreColor"></param>
+        /// <param name="backColor"></param>
         public void AppendLine(string str, Color foreColor, Color backColor)
         {
             try
@@ -92,6 +119,11 @@ namespace PDCLogger
             catch { }
         }
 
+        /// <summary>
+        /// EventHandler<LogEventLogs> handler to handle a logged text event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void HandleLogEvent(object sender, LogEventArgs e)
         {
             if (OnlyThreadIds.Count > 0)

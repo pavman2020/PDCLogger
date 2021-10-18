@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace PDCLogger
 {
+    /// <summary>
+    /// the CachedLogger class allows the caller to capture all of the log messages during a certain time period - optionally only from a particular thread.
+    /// </summary>
     public class CachedLogger : GenericLogger
     {
         private bool m_bPaused = false;
@@ -14,32 +17,57 @@ namespace PDCLogger
 
         private object m_oLock = new object();
 
+        /// <summary>
+        /// cache the log messages from a specified logger object
+        /// </summary>
+        /// <param name="logger"></param>
         public CachedLogger(ILogger logger) : base(false)
         {
             logger.OnLog += HandleLoggerOnLog;
         }
 
+        /// <summary>
+        /// cache the log messages from a specified logger object but only from the specified thread id
+        /// </summary>
         public CachedLogger(ILogger logger, int iThreadId) : this(logger)
         {
             m_niThreadId = iThreadId;
         }
 
+        /// <summary>
+        /// the messages cached during this object's lifetime
+        /// </summary>
         public List<string> Messages { get; private set; } = new List<string>();
 
+        /// <summary>
+        /// pause caching messages
+        /// </summary>
         public void Pause()
         {
             m_bPaused = true;
         }
 
+        /// <summary>
+        /// resume caching messages (if paused)
+        /// </summary>
         public void Resume()
         {
             m_bPaused = false;
         }
         
+        /// <summary>
+        /// show the level of the messages
+        /// </summary>
         public bool ShowLevel { get; set; } = true;
 
+        /// <summary>
+        /// this the thread id that generated the messages
+        /// </summary>
         public bool ShowThread { get; set; } = true;
 
+        /// <summary>
+        /// show the timestamp of each message
+        /// </summary>
         public bool ShowTimeStamp { get; set; } = true;
 
         private void HandleLoggerOnLog(object sender, LogEventArgs e)

@@ -7,6 +7,17 @@ namespace PDCLogger
     {
         #region "Construction / Destruction"
 
+
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="bAttachConsole">if true, the static Console class OnLog will be called to cc every message to the System.Console</param>
+        protected GenericLogger(bool bAttachConsole)
+        {
+            if (bAttachConsole)
+                this.OnLog += Console.OnLog;
+        }
+
         private bool m_bDisposedValue;
 
         ~GenericLogger()

@@ -13,6 +13,11 @@ namespace PDCLogger
             Warning = new ConsoleColors() { Background = ConsoleColor.Black, Foreground = ConsoleColor.Yellow },
         };
 
+        /// <summary>
+        /// a static event handler for the LogEventArgs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public static void OnLog(object sender, LogEventArgs e)
         {
             ConsoleColor fg = System.Console.ForegroundColor;

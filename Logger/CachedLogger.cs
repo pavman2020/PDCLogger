@@ -14,7 +14,7 @@ namespace PDCLogger
 
         private object m_oLock = new object();
 
-        public CachedLogger(ILogger logger)
+        public CachedLogger(ILogger logger) : base(false)
         {
             logger.OnLog += HandleLoggerOnLog;
         }

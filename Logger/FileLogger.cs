@@ -20,14 +20,12 @@ namespace PDCLogger
         #region "Constructor"
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="bAttachConsole">if true (the default), the System.Console will be cc'd with every message </param>
-        protected FileLogger(bool bAttachConsole = true)
+        protected FileLogger(bool bAttachConsole = true) : base(bAttachConsole)
         {
             this.OnLog += HandleLoggerOnLog;
-            if (bAttachConsole)
-                this.OnLog += Console.OnLog;
         }
 
         /// <summary>
@@ -44,12 +42,13 @@ namespace PDCLogger
         /// Create a logger attached to file. this file will be in use until the file reaches 'iMaxLines' in length, and then the object will raise an event, which will be handled by the EventHandler 'ehNewFileIntervalReached'. This event handling must create and set this object's new filename
         /// </summary>
         /// <param name="strFilename">the fully pathed filename</param>
-        /// <param name="iMaxLines"></param>
+        /// <param name="iMaxEntries"></param>
         /// <param name="ehNewFileIntervalReached">EventHandler to indicate a new file is needed</param>
         /// <param name="bAttachConsole">if true (the default), the System.Console will be cc'd with every message </param>
-        public FileLogger(string strFilename, int iMaxLines, EventHandler ehNewFileIntervalReached, bool bAttachConsole = true) : this(strFilename, bAttachConsole)
+        public FileLogger(string strFilename, int iMaxEntries, EventHandler ehNewFileIntervalReached, bool bAttachConsole = true) : this(strFilename, bAttachConsole)
         {
-            MaxLines = iMaxLines;
+            NewFileAfter = Interval.AfterNLines;
+            MaxEntries = iMaxEntries;
             OnNewFileIntervalReached += ehNewFileIntervalReached;
         }
 
@@ -61,6 +60,21 @@ namespace PDCLogger
         /// <param name="bAttachConsole">if true (the default), the System.Console will be cc'd with every message </param>
         public FileLogger(Interval interval, EventHandler ehNewFileIntervalReached, bool bAttachConsole = true) : this(bAttachConsole)
         {
+            switch (interval)
+            {
+                case Interval.AfterNLines:
+                    throw new Exception(string.Format("To use {0} for interval, use the {1} constructor",
+                        interval,
+                        string.Format("{0}(string, int, EventHandler, bool)", typeof(FileLogger).ToString())
+                        ));
+
+                case Interval.Never:
+                    throw new Exception(string.Format("To use {0} for interval, use the {1} constructor",
+                        interval,
+                        string.Format("{0}(string, bool)", typeof(FileLogger).ToString())
+                        ));
+            }
+
             NewFileAfter = interval;
             OnNewFileIntervalReached += ehNewFileIntervalReached;
         }
@@ -77,6 +91,11 @@ namespace PDCLogger
             AfterNLines,
         }
 
+        /// <summary>
+        /// log file fully pathed filename - when set, the FileLogger object will open the file and begin using it log events
+        /// if the path is incorrect - an exception will likely be thrown - the caller must catch and handle all exceptions
+        /// if the file already exists, it will be opened and appended to.
+        /// </summary>
         public string Filename
         {
             get { return m_strFilename; }
@@ -113,14 +132,30 @@ namespace PDCLogger
             }
         }
 
-        public int? MaxLines { get; private set; } = null;
+        /// <summary>
+        /// specifies the maximum number of entries to be written to the log file.
+        /// this can only be set through construction
+        /// </summary>
+        public int? MaxEntries { get; private set; } = null;
 
+        /// <summary>
+        /// specifies when a new file should be created - can only be set through construction
+        /// </summary>
         public Interval NewFileAfter { get; private set; } = Interval.Never;
 
+        /// <summary>
+        /// show the level of the message in the log file
+        /// </summary>
         public bool ShowLevel { get; set; } = true;
 
+        /// <summary>
+        ///  show the thread id of the message  in the log file
+        /// </summary>
         public bool ShowThread { get; set; } = true;
 
+        /// <summary>
+        ///  show the timestamp in the log file
+        /// </summary>
         public bool ShowTimeStamp { get; set; } = true;
 
         private long CurrentDay { get { return 100 * long.Parse(DateTime.Now.ToString("yyyyMMdd")); } }
@@ -185,7 +220,7 @@ namespace PDCLogger
                         switch (NewFileAfter)
                         {
                             case Interval.AfterNLines:
-                                if (((MaxLines ?? 0) > 0) && (m_iCurrentNumLines >= (MaxLines ?? 0)))
+                                if (((MaxEntries ?? 0) > 0) && (m_iCurrentNumLines >= (MaxEntries ?? 0)))
                                     OnNewFileIntervalReached?.Invoke(this, new EventArgs());
                                 break;
 

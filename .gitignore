@@ -11,6 +11,7 @@ Logger/obj/*
 .vs/slnx.sqlite
 *.cache
 Logger/obj/Debug/Logger-VS2019.csproj.AssemblyReference.cache
+WindowsFormsApp1/obj/Debug/WindowsFormsApp1-VS2019.csproj.AssemblyReference.cache
 =======
 ﻿################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.

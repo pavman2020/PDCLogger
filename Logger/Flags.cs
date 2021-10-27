@@ -11,5 +11,17 @@
         public T Exception { get; set; }
 
         public T Debug { get; set; }
+
+        public T All 
+        { 
+            set 
+            { 
+                Info = value; 
+                Warning = value;
+                Error = value;
+                Exception= value;
+                Debug = value;
+            }
+        }
     }
 }

@@ -5,8 +5,6 @@ namespace PDCLogger
 {
     public class FileLogger : GenericLogger
     {
-        private bool m_bDisposedValue = false;
-
         private int m_iCurrentNumLines = 0;
 
         private long m_iDayFileOpened = 0;
@@ -86,8 +84,11 @@ namespace PDCLogger
         public enum Interval
         {
             Never,
+
             Daily,
+
             Hourly,
+
             AfterNLines,
         }
 
@@ -164,12 +165,8 @@ namespace PDCLogger
 
         protected override void Dispose(bool disposing)
         {
-            if (!m_bDisposedValue)
+            if ((disposing) && (!IsDisposed))
             {
-                //if (disposing)
-                //{
-                //}
-
                 lock (m_oLock)
                 {
                     if (null != m_oStreamWriter)
@@ -181,12 +178,17 @@ namespace PDCLogger
                     }
                 }
 
-                m_bDisposedValue = true;
+                foreach (Delegate d in OnNewFileIntervalReached.GetInvocationList())
+                    OnNewFileIntervalReached -= (EventHandler)d;
             }
+
+            base.Dispose(disposing);
         }
 
         private void HandleLoggerOnLog(object o, LogEventArgs e)
         {
+            if (IsDisposed) return;
+
             try
             {
                 Action<string, string, string> appendLineToFile = new Action<string, string, string>((strPrefix, strMessage, strWhence) =>

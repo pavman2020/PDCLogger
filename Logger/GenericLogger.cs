@@ -7,7 +7,6 @@ namespace PDCLogger
     {
         #region "Construction / Destruction"
 
-
         /// <summary>
         /// constructor
         /// </summary>
@@ -18,7 +17,7 @@ namespace PDCLogger
                 this.OnLog += Console.OnLog;
         }
 
-        private bool m_bDisposedValue;
+        protected bool IsDisposed { get; private set; } = false;
 
         ~GenericLogger()
         {
@@ -27,10 +26,13 @@ namespace PDCLogger
 
         protected virtual void Dispose(bool disposing)
         {
-            // classes derived from this, should override the dispose and do their business there
+            if ((disposing) && (!IsDisposed))
+            {
+                IsDisposed = true;
 
-            if (!m_bDisposedValue)
-                m_bDisposedValue = true;
+                foreach (Delegate d in OnLog.GetInvocationList())
+                    OnLog -= (EventHandler<LogEventArgs>)d;
+            }
         }
 
         #endregion "Construction / Destruction"
@@ -46,7 +48,7 @@ namespace PDCLogger
         public Flags<bool> Mute { get; set; } = new Flags<bool>();
 
         /// <summary>
-        /// allows programs to dictate if program source code location is logged 
+        /// allows programs to dictate if program source code location is logged
         /// </summary>
         public Flags<bool> ShowWhence { get; set; } = new Flags<bool>() { Debug = true, Exception = true, Error = true };
 
@@ -72,6 +74,8 @@ namespace PDCLogger
         /// <param name="iLineNo">autofilled by System.Runtime.CompilerServices.CallerLineNumber</param>
         public void LogDebug(string str, [SRCS.CallerMemberName] string strCaller = null, [SRCS.CallerFilePath] string strFile = null, [SRCS.CallerLineNumber] int iLineNo = 0)
         {
+            if (IsDisposed) return;
+
             try { OnLog?.Invoke(this, new LogEventArgs() { Type = LogEventArgs.LogEventType.Debug, String = str, Caller = strCaller, File = strFile, LineNumber = iLineNo }); } catch { }
 
             try { lock (LastLine) { LastLine = str; } } catch { }
@@ -86,6 +90,8 @@ namespace PDCLogger
         /// <param name="iLineNo">autofilled by System.Runtime.CompilerServices.CallerLineNumber</param>
         public void LogError(string str, [SRCS.CallerMemberName] string strCaller = null, [SRCS.CallerFilePath] string strFile = null, [SRCS.CallerLineNumber] int iLineNo = 0)
         {
+            if (IsDisposed) return;
+
             try { OnLog?.Invoke(this, new LogEventArgs() { Type = LogEventArgs.LogEventType.Error, String = str, Caller = strCaller, File = strFile, LineNumber = iLineNo }); } catch { }
 
             try { lock (LastLine) { LastLine = str; } } catch { }
@@ -101,6 +107,8 @@ namespace PDCLogger
         /// <param name="iLineNo">autofilled by System.Runtime.CompilerServices.CallerLineNumber</param>
         public void LogException(string str, Exception ex, [SRCS.CallerMemberName] string strCaller = null, [SRCS.CallerFilePath] string strFile = null, [SRCS.CallerLineNumber] int iLineNo = 0)
         {
+            if (IsDisposed) return;
+
             try { OnLog?.Invoke(this, new LogEventArgs() { Type = LogEventArgs.LogEventType.Exception, String = str, Exception = ex, Caller = strCaller, File = strFile, LineNumber = iLineNo }); } catch { }
 
             try { lock (LastLine) { LastLine = str; } } catch { }
@@ -115,6 +123,8 @@ namespace PDCLogger
         /// <param name="iLineNo">autofilled by System.Runtime.CompilerServices.CallerLineNumber</param>
         public void LogInfo(string str, [SRCS.CallerMemberName] string strCaller = null, [SRCS.CallerFilePath] string strFile = null, [SRCS.CallerLineNumber] int iLineNo = 0)
         {
+            if (IsDisposed) return;
+
             try { OnLog?.Invoke(this, new LogEventArgs() { Type = LogEventArgs.LogEventType.Info, String = str, Caller = strCaller, File = strFile, LineNumber = iLineNo }); } catch { }
 
             try { lock (LastLine) { LastLine = str; } } catch { }
@@ -129,6 +139,8 @@ namespace PDCLogger
         /// <param name="iLineNo">autofilled by System.Runtime.CompilerServices.CallerLineNumber</param>
         public void LogWarning(string str, [SRCS.CallerMemberName] string strCaller = null, [SRCS.CallerFilePath] string strFile = null, [SRCS.CallerLineNumber] int iLineNo = 0)
         {
+            if (IsDisposed) return;
+
             try { OnLog?.Invoke(this, new LogEventArgs() { Type = LogEventArgs.LogEventType.Warning, String = str, Caller = strCaller, File = strFile, LineNumber = iLineNo }); } catch { }
 
             try { lock (LastLine) { LastLine = str; } } catch { }

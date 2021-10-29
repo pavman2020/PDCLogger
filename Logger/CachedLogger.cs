@@ -72,6 +72,9 @@ namespace PDCLogger
 
         private void HandleLoggerOnLog(object sender, LogEventArgs e)
         {
+            if (IsDisposed)
+                return;
+
             if (m_bPaused)
                 return;
 
